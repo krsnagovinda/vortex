@@ -1,0 +1,109 @@
+{% extends 'back/master2.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block titulo %}
+    <title> Menú Principal </title>
+{% endblock %}
+
+{% block header %}
+
+<div class="content-header-media">
+  <div class="header-section">
+      <img src="{{user.staff.Foto.url}}" alt="Avatar" class="pull-right img-circle" width="100" height="100">
+      <h1>Bienvenido <strong>{{user.staff.Nombre}} {{user.staff.Apellido_Paterno}}</strong><br><small>la última sesión fue:  {{ user.last_login }}</small></h1>
+  </div>
+<!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
+  <img src="{% static 'cora4.jpg' %}" alt="header image" class="animation-pulseSlow">
+</div>
+<br>
+<br>
+<br>
+{% endblock %}
+                           
+{% block mainblock %}
+<!-- aqui empieza el nuevo panel-->
+
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-2">
+  <a href="{% url 'class_pacientes_lista' %}" class="widget widget-hover-effect1 themed-background-muted-light animation-bounce" data-animation="animation-hatch">
+    <div class="widget-simple">
+      <center>
+        <div class="widget-icon  themed-background-fire">
+            <i class="fa fa-database"></i>
+        </div>
+          <h4 class="text-center themed-color-dark-night">
+              <strong>Pacientes</strong>
+          </h4>
+      <center>
+    </div>
+  </a>
+</div>
+
+<div class="col-md-2">
+  <a href="{% url 'class_upload_record' %}" class="widget widget-hover-effect1 themed-background-muted-light animation-hatch" data-animation="animation-hatch">
+    <div class="widget-simple">
+      <center>
+        <div class="widget-icon  themed-background-modern">
+            <i class="fa fa-heartbeat"></i>
+        </div>
+          <h4 class="text-center themed-color-dark-night">
+              <strong>Nueva Ficha</strong>
+          </h4>
+      <center>
+    </div>
+  </a>
+</div>
+
+<div class="col-md-2">
+  <a href="{% url 'class_upload_paciente' %}" class="widget widget-hover-effect1 themed-background-muted-light animation-fadeIn360" data-animation="animation-hatch">
+    <div class="widget-simple">
+      <center>
+        <div class="widget-icon  themed-background-amethyst">
+            <i class="fa fa-wheelchair"></i>
+        </div>
+          <h4 class="text-center themed-color-dark-night">
+              <strong>Nuevo Paciente</strong>
+          </h4>
+      <center>
+    </div>
+  </a>
+</div>
+
+<div class="col-md-2">
+  <a href="{% url 'class_staff_lista' %}" class="widget widget-hover-effect1 themed-background-muted-light animation-hatch" data-animation="animation-hatch">
+    <div class="widget-simple">
+      <center>
+        <div class="widget-icon  themed-background-coral">
+            <i class="gi gi-group"></i>
+        </div>
+          <h4 class="text-center themed-color-dark-night">
+              <strong>Staff</strong>
+          </h4>
+      <center>
+    </div>
+  </a>
+</div>
+
+<div class="col-md-2">
+  <a href="{% url 'admin:login' %}" class="widget widget-hover-effect1 themed-background-muted-light animation-fadeIn360" data-animation="animation-hatch">
+    <div class="widget-simple">
+      <center>
+        <div class="widget-icon  themed-background-default">
+            <i class="fa fa-gears"></i>
+        </div>
+          <h4 class="text-center themed-color-dark-night">
+              <strong>Admin</strong>
+          </h4>
+      <center>
+    </div>
+  </a>
+</div>
+
+<div class="col-md-1"></div>
+
+</div>
+</div>
+
+{% endblock %}

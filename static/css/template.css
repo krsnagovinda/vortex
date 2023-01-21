@@ -1,0 +1,27 @@
+/* color y estilo de la barra superior*/
+.barra{
+  background: rgba(51,98,119,0.7);
+  padding: 1% 0;
+  font-size: 1.2em;
+  font-style: oblique;
+}
+
+.nav-item{
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.navbar-light .navbar-nav .nav-item .nav-link{
+  padding: 5px 15px;
+}
+
+.navbar-light .navbar-toggler{
+  border: none;
+  color: #fff;
+  border: 2px solid #7f7f7f;
+  border-radius: 0;
+  outline: none;
+}
+
+.barra .navbar-brand{ min-height: 40px; padding: 5px 15px 5px; color: aliceblue; font-family: 'Monoton', cursive;}
+.barra .dropdown-menu{background: rgba(51,98,119,0.7);}

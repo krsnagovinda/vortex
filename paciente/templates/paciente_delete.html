@@ -1,0 +1,67 @@
+{% extends 'back/master.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block titulo %}
+    <title> Eliminar paciente - {{object}} ? </title>
+{% endblock %}
+
+{% block sidebar %}
+<!-- Sidebar Navigation -->
+<ul class="sidebar-nav">
+    <li class="sidebar-header">
+        <span class="sidebar-header-title">Elija una opción</span>
+    </li>
+
+    <li>
+        <a href="{% url 'home' %}" ><i class="fa fa-windows sidebar-nav-icon"></i>Menú Principal</a>
+    </li>
+
+    <li>
+        <a href="#" class=" text-primary sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-wheelchair sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Pacientes</span></a>
+        <ul>
+            <li >
+                <a href="{% url 'class_pacientes_lista' %}">Archivo de Pacientes</a>
+                <a href="{% url 'class_upload_record' %}">Crear Paciente</a>
+                <a  class="active"  href="">Eliminar Registro?</a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-group sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Staff</span></a>
+        <ul>
+            <li>
+                <a href="{% url 'class_staff_lista' %}">Staff</a>
+                <a href="{% url 'class_upload_staff' %}">Crear Usuario</a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="{% url 'admin:login' %}" ><i class="fa fa-cogs sidebar-nav-icon"></i>Modo Adminstrador</a>
+    </li>
+<!-- END Sidebar Navigation -->
+{% endblock %}
+
+
+{% block mainblock %}
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 block full themed-border-default">
+          <div class="d-flex justify-content-center">
+             <h3 class="mb-5 themed-color-night">¿Realmente desea eliminar el registro {{object}} ?</h3>
+          </div>
+                 <div class="d-flex  justify-content-center ">
+                  <form class="form" method="post">
+                    {% csrf_token %}
+                    <center>
+                    <input type="submit" name="Eliminar" value="Si, eliminar" class="btn btn-danger eliminar">
+                    <a  class="btn btn-warning cancelar ml-3" href="{% url 'class_pacientes_lista' %}">Cancelar</a>
+                </center>
+                  </form>
+                 </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+/* color y estilo de la barra superior*/
+.barra{
+  background: rgba(51,98,119,0.7);
+  padding: 1% 0;
+  font-size: 1.2em;
+  font-style: oblique;
+}
+
+.nav-item{
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.navbar-light .navbar-nav .nav-item .nav-link{
+  padding: 5px 15px;
+}
+
+.navbar-light .navbar-toggler{
+  border: none;
+  color: #fff;
+  border: 2px solid #7f7f7f;
+  border-radius: 0;
+  outline: none;
+}
+
+.barra .navbar-brand{ min-height: 40px; padding: 5px 15px 5px; color: aliceblue; font-family: 'Monoton', cursive;}
+.barra .dropdown-menu{background: rgba(51,98,119,0.7);}
+
+/* Configuraciones formulario */
+
+html{
+  background: rgba(54,72,67,0.3);
+}
+
+.lala{
+  background: rgba(54,72,67,0.3);
+}
+
+.container{
+  position: relative;
+  background: rgba(54,72,67,0.3);
+  padding:55px 55px 65px 90px;
+  max-width: auto;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  margin-top: 10px;
+  box-shadow: 1px 1px 25px black;
+}
+
+.letrero{
+  font-size: 1.3em;
+  max-width: auto;
+}
+
+.asterisco{
+  color:     #c82b13  ;
+  font-size: 0.9em;
+}

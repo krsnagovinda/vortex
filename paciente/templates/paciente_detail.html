@@ -1,0 +1,143 @@
+{% extends 'back/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block titulo %}
+    <title> Detalle de Paciente {{paciente.id_Paciente}}</title>
+{% endblock %}
+
+
+{% block sidebar %}
+<!-- Sidebar Navigation -->
+<ul class="sidebar-nav">
+    <li class="sidebar-header">
+        <span class="sidebar-header-title">Elija una opción</span>
+    </li>
+
+    <li>
+        <a href="{% url 'home' %}" ><i class="fa fa-windows sidebar-nav-icon"></i>Menú Principal</a>
+    </li>
+
+    <li>
+        <a href="#" class=" text-primary sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-wheelchair sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Pacientes</span></a>
+        <ul>
+            <li >
+                <a href="{% url 'class_pacientes_lista' %}">Archivo de Pacientes</a>
+                <a href="{% url 'class_upload_record' %}">Crear Paciente</a>
+                <a class="active">Bitácora del Paciente</a>
+            </li>
+
+        </ul>
+    </li>    
+    <li>
+        <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-group sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Staff</span></a>
+        <ul>
+            <li>
+                <a href="{% url 'class_staff_lista' %}">Staff</a>
+                <a href="{% url 'class_upload_staff' %}">Crear Usuario</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="{% url 'admin:login' %}" ><i class="fa fa-cogs sidebar-nav-icon"></i>Modo Adminstrador</a>
+    </li>
+<!-- END Sidebar Navigation -->
+{% endblock %}
+
+{% block mainblock %}
+<div id="page-content">
+                   <!-- Forms General Header -->
+                   <div class="content-header themed-background-dark-default">
+                       <div class="header-section">
+                           <h1>
+                               <i class="gi gi-notes_2 themed-color-default"></i>
+                               <h2 class="themed-color-default">{{paciente.Apellido_Paterno}} {{paciente.Apellido_Materno}} {{paciente.Nombre}}. ( {{paciente.Edad}} años )</h2>
+                               <h4 class="text-light">Id: {{paciente.id_Paciente}}</h4>
+                           </h1>
+                       </div>
+                   </div>
+                        <ul class="breadcrumb breadcrumb-top themed-background-night">
+                             <li class="breadcrumb-item"><a href="{% url 'home' %}" class="themed-color-dark-waterlily"><i class="fa fa-home themed-color-dark"></i> Menú principal</a></li>
+                            <li><a class="themed-color-dark-waterlily" href="{% url 'class_pacientes_lista' %}">Lista pacientes</a></li>
+                            <li><a class="text-light" href="#">Bitácora de paciente</a></li>
+                        </ul>
+<div class="row">
+    <div class="block">
+        <div class="row">
+            <div class="col-md-12">
+                                <!-- Default Tabs -->
+                <ul class="nav nav-tabs push" data-toggle="tabs">
+                    <li class="active"><a class="themed-color-blackberry" href="#example-tabs-Ficha"><i class="fa fa-stethoscope"></i> Ficha Clínica</a></li>
+                    <li><a class="themed-color-amethyst" href="#example-tabs-Datos" data-toggle="tooltip" title=""><i class="fa fa-wheelchair"></i> Datos Personales</a></li>
+                </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="example-tabs-Ficha">
+                            {% if object.id_Expediente %}
+                                <div class="block col-sm-12">
+                                    <h4 class="themed-color-dark-night font-weight-bold text-justify mb-1">{{object.id_Expediente.Expediente | safe}}</h4>
+                                </div>
+                                <br>
+                            {% else %}
+                                <p>no hay notas</p>
+                            {% endif %} 
+                            <center><a href="{% url 'class_update_record' paciente.id %}" class="btn btn-lg themed-background-blackberry text-light">Editar</a></center><br>          
+                        </div>                                    
+                        <div class="tab-pane" id="example-tabs-Datos">
+                            <div class="block col-sm-12"> 
+                                <h2 class="text-left themed-color-dark-blackberry"> Información General</h2>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Titulo}}</h5><br>
+                                <h4 class="text-justify themed-color-dark-night">Apellido Paterno:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Apellido_Paterno}}</h5><br>
+                                                    {% if object.Apellido_Materno %}
+                                <h4 class="text-justify themed-color-dark-night">Apellido Materno:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Apellido_Materno}}</h5><br>
+                                                    {% endif %}
+                                <h4 class="text-justify themed-color-dark-night">Nombre(s):</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Nombre}}</h5><br>
+                                                    {% if object.Fecha_Nacimiento %}
+                                <h4 class="text- justify themed-color-dark-night">Fecha de Nacimiento:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Fecha_Nacimiento}}</h5><br>
+                                                    {% endif %}
+                                                    {% if object.Edad %}
+                                <h4 class="text-justify themed-color-dark-night">Edad:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Edad}}</h5><br>
+                                                    {% endif%}
+                            
+                                <h2 class="text-left themed-color-dark-blackberry"> Información de Contacto</h2><br>
+                                
+                                                  {% if object.Domicilio %}
+                                <h4 class="text-justify themed-color-dark-night">Domicilio:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Domicilio}}</h5><br>
+                                                  {% endif %}
+
+                                                  {% if object.Ciudad %}
+                                <h4 class="text-justify themed-color-dark-night">Ciudad:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Ciudad}}</h5><br>
+                                                  {% endif %}
+
+                                                  {% if object.Telefono %}
+                                <h4 class="text-justify themed-color-dark-night">Teléfono:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Telefono}}</h5><br>
+                                                  {% endif %}
+
+                                                  {% if object.Email %}
+                                <h4 class="text-justify themed-color-dark-night">E-mail:</h4>
+                                <h5 class="themed-color-fancy font-weight-bold text-justify mb-1">{{object.Email}}</h5><br>
+                                                  {% endif %}
+                                </div>    
+                                    <center><a href="{% url 'class_update' paciente.id %}" class="btn btn-lg  themed-background-default text-light">Editar</a></center>
+                                <br>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+<script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js'></script>

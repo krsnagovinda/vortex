@@ -1,0 +1,87 @@
+{% extends 'back/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}
+    <title> Detalle de </title>
+{% endblock %}
+
+{% block sidebar %}
+<!-- Sidebar Navigation -->
+<ul class="sidebar-nav">
+    <li class="sidebar-header">
+        <span class="sidebar-header-title">Elija una opción</span>
+    </li>
+
+    <li>
+        <a href="{% url 'home' %}" ><i class="fa fa-windows sidebar-nav-icon"></i>Menú Principal</a>
+    </li>
+
+    <li>
+        <a href="#" class=" sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-wheelchair sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Pacientes</span></a>
+        <ul>
+            <li >
+                <a href="{% url 'class_pacientes_lista' %}">Archivo de Pacientes</a>
+                <a href="{% url 'class_upload_paciente' %}">Crear Paciente</a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="text-primary sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-group sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Staff</span></a>
+        <ul>
+            <li>
+                <a href="{% url 'class_staff_lista' %}">Archivo de Staff</a>
+                <a href="{% url 'class_upload_staff' %}">Crear Usuario</a>
+                <a class="active" href="#">Detalle Usuario</a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="{% url 'admin:login' %}" ><i class="fa fa-cogs sidebar-nav-icon"></i>Modo Adminstrador</a>
+    </li>
+<!-- END Sidebar Navigation -->
+{% endblock %}
+
+{% block mainblock %}
+<div id="page-content">
+  <ul class="breadcrumb breadcrumb-top themed-background-night">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="themed-color-dark-waterlily"><i class="fa fa-home themed-color-dark"></i> Menú principal</a></li>
+    <li><a class="themed-color-dark-waterlily" href="{% url 'class_staff_lista' %}">Lista usuarios</a></li>
+    <li><a class="text-light" href="#">Perfil usuario</a></li>
+
+  </ul>
+  <div class="row">
+    <div class="block">
+    <div class="row">
+      <div class="col-sm-1"></div>
+        <div class="col-sm-7">
+            <div class="card">
+                <div class="card-body">
+                        <p class="font-weight-bold text-center text-primary mb-2 display-4">Usuario:</p><p class="text-center font-italic mb-4 display-5"> {{staff.user}}</p>
+                        <p class="font-weight-bold text-center text-primary mb-2 display-4">Nombre(s):</p><p class="text-center font-italic mb-4 display-5"> {{staff.Nombre}}</p>
+                        <p class="font-weight-bold text-center text-primary mb-2 display-4">Apellido Paterno:</p> <p class="text-center font-italic mb-4 display-5"> {{staff.Apellido_Paterno}}</p>
+                        <p class="font-weight-bold text-center text-primary mb-2 display-4">Apellido Materno:</p> <p class="text-center font-italic mb-4 display-5"> {{staff.Apellido_Materno}}</p>                        
+                        <p class="font-weight-bold text-center text-primary mb-2 display-4">Teléfono:</p> <p class="text-center font-italic mb-4 display-5"> {{staff.Telefono}}</p>
+                        <p class="font-weight-bold text-center text-primary mb-2 display-4">Email:</p> <p class="text-center font-italic mb-4 display-5"> {{staff.email}}</p>
+    				<br>            
+					          <div class="">
+                      <center><a href="{% url 'class_update_staff' staff.id %}" class="btn btn-lg btn-block themed-background-default themed-color-dark-default">Editar</a></center>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+          </div>
+        </div>
+      <div class="col-sm-4">      
+        <img src="{{staff.Foto.url}}"  class="pull-right img-circle" width="50%">
+      </div>            
+                
+            
+            
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

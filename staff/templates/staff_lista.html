@@ -1,0 +1,134 @@
+{% extends 'back/master.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block titulo %}
+    <title> Lista de Usuarios </title>
+{% endblock %}
+
+{% block sidebar %}
+<!-- Sidebar Navigation -->
+<ul class="sidebar-nav">
+    <li class="sidebar-header">
+        <span class="sidebar-header-title">Elija una opción</span>
+    </li>
+
+    <li>
+        <a href="{% url 'home' %}" ><i class="fa fa-windows sidebar-nav-icon"></i>Menú Principal</a>
+    </li>
+
+    <li>
+        <a href="#" class=" sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-wheelchair sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Pacientes</span></a>
+        <ul>
+            <li >
+                <a href="{% url 'class_pacientes_lista' %}">Archivo de Pacientes</a>
+                <a href="{% url 'class_upload_paciente' %}">Crear Paciente</a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="text-primary sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-group sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sección de Staff</span></a>
+        <ul>
+            <li>
+                <a class="active" href="{% url 'class_staff_lista' %}">Archivo de Staff</a>
+                <a href="{% url 'class_upload_staff' %}">Crear Usuario</a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="{% url 'admin:login' %}" ><i class="fa fa-cogs sidebar-nav-icon"></i>Modo Adminstrador</a>
+    </li>
+<!-- END Sidebar Navigation -->
+{% endblock %}
+
+{% block header %}
+<!-- Page content -->
+    <div id="page-content">
+                        <!-- eCommerce Orders Header -->
+                        <div class="content-header themed-background-dark-autumn">
+                            <ul class="nav-horizontal text-center">
+                                <li>
+                                    <a href="{% url 'home' %}" class="themed-background-dark-autumn themed-color-default"><i class="fa fa-windows sidebar-nav-icon"></i> Menú Principal</a>
+                                </li>
+                                <li >
+                                    <a href="{% url 'class_pacientes_lista' %}" class="themed-background-dark-autumn"><i class="fa fa-wheelchair"></i> Pacientes</a>
+                                </li>
+                                                              
+                                <li>
+                                    <a href="{% url 'class_staff_lista' %}" class="themed-background-autumn themed-color-dark-autumn"><i class="gi gi-group sidebar-nav-icon themed-color-dark-autumn"></i> Staff</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'admin:login' %}" class="themed-background-dark-autumn" ><i class="fa fa-cogs"></i> Admin</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END eCommerce Orders Header -->
+{% endblock %}
+
+{% block indicadores %}
+                        <!-- Quick Stats -->
+                        <div class="row text-center">
+                            <div class="col-sm-2 col-lg-2">
+                                <a href="{% url 'class_upload_staff' %}" class="widget widget-hover-effect1">
+                                    <div class="widget-extra themed-background-autumn">
+                                        <h4 class="widget-content-light"><strong>Nuevo</strong> Usuario</h4>
+                                    </div>
+                                    <div class="widget-extra-full"><span class="h2 text-autumn animation-expandOpen"><i class="fa fa-plus"></i></span></div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END Quick Stats -->
+{% endblock %}
+
+{% block mainblock %}
+<!-- All Orders Block -->
+<div class="block full themed-border-autumn">
+    <!-- All Orders Title -->
+    <div class="block-title text-center">
+        <h2><strong class="themed-color-autumn">Lista de los Usuarios registrados en el sistema</strong></h2>
+    </div>
+    <!-- END All Orders Title -->
+
+    <!-- All Orders Content -->
+    {% if staff %}
+    <table id="ecom-orders" class="table table-bordered table-striped table-vcenter themed-color-dark">
+        <thead>
+            <tr>
+                <th class="text-center themed-color-dark-autumn" style="width: 100px;">ID</th>
+                <th class="text-center themed-color-dark-autumn">Apellido Paterno</th>
+                <th class="text-center themed-color-dark-autumn">Apellido Materno</th>
+                <th class="hidden-xs themed-color-dark-autumn">Nombre (s)</th>
+                <th class="text-center themed-color-dark-autumn">Función</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in staff %}
+            <tr>
+                <td class="text-center"><strong>{{staff.id}}</strong></td>
+                <td class="text-center">{{staff.Apellido_Paterno}}</td>
+                <td class="text-center">{{staff.Apellido_Materno}}</td>
+                <td class="hidden-xs">{{staff.Nombre}}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs">
+                        <a href="{% url 'class_detail_staff' staff.id %}" data-toggle="tooltip" title="Ver Ficha" class="btn btn-default"><i class="fa fa-eye">  Ficha</i></a>
+                        <a href="{% url 'class_delete_staff' staff.id %}" data-toggle="tooltip" title="Eliminar?" class="btn btn-xs btn-danger"><i class="fa fa-times">  Eliminar</i></a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+         <center>
+         <h3>no se han encontrado Médicos...</h3>
+         <img src="{% static 'website/img/bg-img/gato.png' %}" alt="" style="width:30%;">
+         </center>
+    {% endif %}
+        <!-- END All Orders Content -->
+</div>
+</div>
+        <!-- END All Orders Block -->
+    <!-- END Page Content -->
+{% endblock %}

@@ -1,0 +1,23 @@
+
+.container{
+  position: relative;
+  background: rgba(54,72,67,0.3);
+  padding:55px 55px 65px 90px;
+  max-width: auto;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  margin-top: 10px;
+  box-shadow: 1px 1px 25px black;
+}
+
+.letrero{
+  font-size: 1.3em;
+  max-width: auto;
+}
+
+.asterisco{
+  color:     #c82b13  ;
+  font-size: 0.9em;
+}
