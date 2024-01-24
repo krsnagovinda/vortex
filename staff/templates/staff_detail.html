@@ -1,0 +1,165 @@
+{% extends 'bases/base_sin_sidebar.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Detalle de {{staff.get_fullname}}
+{% endblock %}
+
+{% block navigation_icon %} {% endblock %}
+
+{% block sidebar %}
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a target="_blank" rel="noopener noreferrer" class="simple-text logo-normal">
+      Control <i class="fa fa-ravelry fa-lg text-info" aria-hidden="true"></i> Dr. Ortega
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+    {% if request.user.is_authenticated %}
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="material-icons">dashboard</i>
+          <p>Menú Principal</p>
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="material-icons">public</i>
+            <p>Website</p>
+          </a>
+      </li>
+      <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_pacientes_lista' %}">
+          <i class="material-icons">medical_services</i>
+          <p>Pacientes</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_staff_lista' %}">
+          <i class="material-icons">groups</i>
+          <p>Staff</p>
+        </a>
+      </li>
+      <li class="nav-item active {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_detail_staff' user.staff.id %}">
+          <i class="material-icons">person</i>
+          <p>Perfíl de Usuario</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'admin:login' %}">
+          <i class="material-icons">admin_panel_settings</i>
+          <p>Modo Admin</p>
+        </a>
+      </li>       
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'logout' %}" >
+          <i class="material-icons">directions_run</i>
+          <p>Salir</p>
+        </a>
+      </li>
+
+     
+    {% else %}
+
+    <li class="nav-item active ">
+      <a class="nav-link" href="{% url 'login' %}" >
+        <i class="material-icons">face</i>
+        <p>Entrar</p>
+      </a>
+    </li>
+
+
+    {% endif %}
+    </ul>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-warning">
+          <h3 class="card-title">Perfil de Usuario</h3> 
+          <h5>{{staff.get_fullname}} - "{{staff.user}}"</h5>         
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="bmd-label-floating">User ID (deshabilitado)</label>
+                  <input type="text" class="form-control" disabled value="{{ user.id }}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Usuario(s)</label>
+                  <input type="text" class="form-control" value="{{ staff.user }}">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Nombre (s)</label>
+                  <input type="text" class="form-control" value="{{staff.Nombre}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Apellido Paterno</label>
+                  <input type="text" class="form-control" value="{{staff.Apellido_Paterno}}">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Apellido Materno</label>
+                  <input type="text" class="form-control" value="{{staff.Apellido_Materno}}">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-profile">
+        <div class="card-avatar">
+          <a>
+            <img class="img" src="{{staff.Foto.url}}" />
+          </a>
+        </div>
+        <div class="card-body">
+          {% if staff.Telefono %}
+            <h6 class="card-category text-gray">
+              <i class="material-icons mb-4">phone_iphone</i>              
+              <strong><p>{{ staff.Telefono}}</p></strong>              
+            </h6>
+          {% endif %}
+          {% if staff.email %}            
+            <h4 class="card-title">
+              <i class="material-icons">markunread_mailbox</i>
+              <p>{{ staff.email }}</p>
+            </h4>
+          {% endif %}
+          <a href="{% url 'class_update_staff' staff.id %}" class="btn btn-warning btn-round">Editar</a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %} {% endblock %}

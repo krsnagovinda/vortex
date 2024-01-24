@@ -1,0 +1,160 @@
+{% extends 'bases/base_sin_sidebar.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load materializecss %}
+
+{% block title %}
+    <title>Crear Paciente </title>
+{% endblock %}
+
+
+{% block navigation_icon %}
+{% endblock %}
+
+
+{% block sidebar %}
+
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a target="_blank" rel="noopener noreferrer" class="simple-text logo-normal">
+      Control <i class="fa fa-ravelry fa-lg text-info" aria-hidden="true"></i> Dr. Ortega
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+    {% if request.user.is_authenticated %}
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="material-icons">dashboard</i>
+          <p>Menú Principal</p>
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="material-icons">public</i>
+            <p>Website</p>
+          </a>
+      </li>
+      <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_pacientes_lista' %}">
+          <i class="material-icons">medical_services</i>
+          <p>Pacientes</p>
+        </a>        
+      </li>
+      <li class="nav-item active {% if 'page-user' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_upload_paciente' %}">
+          <i class="material-icons">person_add_alt</i>
+          <p>Nuevo Paciente</p>
+        </a>
+      </li>
+
+
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_staff_lista' %}">
+          <i class="material-icons">groups</i>
+          <p>Staff</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_detail_staff' user.staff.id %}">
+          <i class="material-icons">person</i>
+          <p>Perfíl de Usuario</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'admin:login' %}">
+          <i class="material-icons">admin_panel_settings</i>
+          <p>Modo Admin</p>
+        </a>
+      </li>       
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'logout' %}" >
+          <i class="material-icons">directions_run</i>
+          <p>Salir</p>
+        </a>
+      </li>
+
+     
+    {% else %}
+
+    <li class="nav-item active ">
+      <a class="nav-link" href="{% url 'login' %}" >
+        <i class="material-icons">face</i>
+        <p>Entrar</p>
+      </a>
+    </li>
+
+
+    {% endif %}
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block css %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> 
+  <link href="/static/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4>Crear Nuevo Paciente</h4>      
+            </div>
+            <div class="card-body">
+                <form action="{% url 'class_upload_paciente' %}" method="POST" class="form-bordered" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form|materializecss}}                  
+                                  
+                  <br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 center-align">          
+                    <button type="submit" class="btn btn-warning btn-round">Crear</button>          
+                </div>
+            </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    
+</div>
+{% endblock %}
+                               
+
+{% block footer %}  {% endblock %}
+
+
+{% block js %}
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+
+  // Initialize materialize data picker
+  $('.datepicker').datepicker({'format': 'dd-mm-yyyy'});
+  $('select').formSelect();
+
+});
+</script>
+{% endblock %}
+

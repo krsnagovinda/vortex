@@ -1,0 +1,142 @@
+{% extends 'bases/base_sin_sidebar.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    Resultado de Búsqueda
+{% endblock %}
+
+{% block navigation_icon %}  {% endblock %}
+
+{% block sidebar %}
+
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a target="_blank" rel="noopener noreferrer" class="simple-text logo-normal">
+      Vortex Ortega
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+    {% if request.user.is_authenticated %}
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="material-icons">dashboard</i>
+          <p>Menú Principal</p>
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="material-icons">public</i>
+            <p>Website</p>
+          </a>
+      </li>
+      <li class="nav-item active {% if 'page-user' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_pacientes_lista' %}">
+          <i class="material-icons">medical_services</i>
+          <p>Pacientes</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="/ui-tables.html">
+          <i class="material-icons">groups</i>
+          <p>Staff</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="/ui-typography.html">
+          <i class="material-icons">person</i>
+          <p>Perfíl de Usuario</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="/ui-typography.html">
+          <i class="material-icons">admin_panel_settings</i>
+          <p>Modo Admin</p>
+        </a>
+      </li>       
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'logout' %}" >
+          <i class="material-icons">directions_run</i>
+          <p>Salir</p>
+        </a>
+      </li>
+
+     
+    {% else %}
+
+    <li class="nav-item active ">
+      <a class="nav-link" href="{% url 'login' %}" >
+        <i class="material-icons">face</i>
+        <p>Entrar</p>
+      </a>
+    </li>
+
+
+    {% endif %}
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">          
+              <h3 class="card-title ">Resultado de Búsqueda - Lista de Pacientes</h3>            
+          </div>
+          <div class="card-body">
+            {% if object_list %}
+            <div class="table-responsive table-striped">
+              <table class="table table-hover">
+                <thead class="text-primary">
+                  <tr>
+                    <strong>
+                      <th class="text-center "><h4>ID</h4></th>
+                      <th class="text-center "><h4>Apellido Paterno</h4></th>
+                      <th class="text-center "><h4>Apellido Materno</h4></th>
+                      <th class="text-center "><h4>Nombre (s)</h4></th>
+                      <th class="text-center "><h4>Función</h4></th>
+                    </strong>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for paciente in object_list %}
+                  <tr>
+                      <td class="text-center"><strong>{{paciente.id_Expediente}}</strong></td>
+                      <td class="text-center">{{paciente.Apellido_Paterno}}</td>
+                      <td class="text-center">{{paciente.Apellido_Materno}}</td>
+                      <td class="text-center">{{paciente.Nombre}}</td>
+                      <td class="text-center">
+                          <div class="btn-group btn-group-md">
+                            <a href="{% url 'class_detail_paciente' paciente.id %}" title="Datos personales, galería, consultas y citas" class="btn mr-2"><i class="fa fa-folder-open"></i></a>
+                            <a href="{% url 'class_delete_record' paciente.id %}" data-toggle="tooltip" title="¿Eliminar registro y sus datos?" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+              </table>              
+            </div>
+            {% else %}
+              <center>
+                <h3>no se han encontrado pacientes...</h3>
+                <img src="{% static 'assets/img/new_logo.png' %}" alt="" style="width:30%;">
+              </center>
+            {% endif %}           
+          </div>
+        </div>
+      </div>
+  </div>
+
+  {% endblock %}
+
+  {% block footer %}  {% endblock %}

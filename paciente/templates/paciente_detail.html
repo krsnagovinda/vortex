@@ -1,0 +1,173 @@
+{% extends 'bases/base_sin_sidebar.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}
+    Detalle de Paciente {{paciente.id_Paciente}}
+{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a target="_blank" rel="noopener noreferrer" class="simple-text logo-normal">
+      Control <i class="fa fa-ravelry fa-lg text-info" aria-hidden="true"></i> Dr. Ortega
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+    {% if request.user.is_authenticated %}
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="material-icons">dashboard</i>
+          <p>Menú Principal</p>
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="material-icons">public</i>
+            <p>Website</p>
+          </a>
+      </li>
+      <li class="nav-item active {% if 'page-user' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_pacientes_lista' %}">
+          <i class="material-icons">medical_services</i>
+          <p>Pacientes</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_staff_lista' %}">
+          <i class="material-icons">groups</i>
+          <p>Staff</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_detail_staff' user.staff.id %}">
+          <i class="material-icons">person</i>
+          <p>Perfíl de Usuario</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'admin:login' %}">
+          <i class="material-icons">admin_panel_settings</i>
+          <p>Modo Admin</p>
+        </a>
+      </li>       
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'logout' %}" >
+          <i class="material-icons">directions_run</i>
+          <p>Salir</p>
+        </a>
+      </li>
+
+     
+    {% else %}
+
+    <li class="nav-item active ">
+      <a class="nav-link" href="{% url 'login' %}" >
+        <i class="material-icons">face</i>
+        <p>Entrar</p>
+      </a>
+    </li>
+
+
+    {% endif %}
+    </ul>
+  </div>
+
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xl-9">
+            <div class="card">
+                <div class="card header card-header-primary">
+                    <h3 class="card-title">Ficha Clínica de: </h3>
+                    <h5>{{object.get_fullname}}. ({{object.Edad}} años)</h5>                   
+                </div>
+                <div class="card-body">
+                    <div class="jumbotron">
+                        
+                        {% if object.id_Expediente %}                   
+                            <h4 class="text-justify">{{object.id_Expediente.Expediente | safe}}</h4>                    
+                            <br>
+                        {% else %}
+                            <h3>No hay Notas</h3>
+                        {% endif %}
+                        
+                    </div>
+                <div class="container text-center mb-3">                
+                    <a href="{% url 'class_update_record' paciente.id %}"><button type="button" class="btn btn-warning btn-round">Editar</button></a>                    
+                </div>     
+                </div>          
+            </div>
+        </div>
+
+        <div class="col-xl-3 ">
+            <div class="card">
+               <div class="card header card-header-primary">
+                    <h3 class="card-title">Datos personales</h3>                    
+                </div> 
+            <div class="card-body">
+                <div class="jumbotron">
+                    <h4 class="text-justify text-primary">Id:</h4>
+                    <h6 class="text-justify mb-1">{{object.id_Expediente}}</h6><br>                
+                    <h4 class="text-justify text-primary">Apellido Paterno:</h4>                
+                    <h6 class="text-justify mb-1">{{object.Apellido_Paterno}}</h6><br>
+                    {% if object.Apellido_Materno %}
+                        <h4 class="text-justify text-primary">Apellido Materno:</h4>
+                        <h6 class="text-justify mb-1">{{object.Apellido_Materno}}</h6><br>
+                    {% endif %}
+                        <h4 class="text-justify text-primary">Nombre(s):</h4>
+                        <h6 class="text-justify mb-1">{{object.Nombre}}</h6><br>
+                    {% if object.Fecha_Nacimiento %}
+                        <h4 class="text- justify text-primary">Fecha de Nacimiento:</h4>
+                        <h6 class="text-justify mb-1">{{object.Fecha_Nacimiento}}</h6><br>
+                    {% endif %}
+                    {% if object.Edad %}
+                        <h4 class="text-justify text-primary">Edad:</h4>
+                        <h6 class="text-justify mb-1">{{object.Edad}}</h6><br>
+                    {% endif%}
+                    {% if object.Domicilio %}
+                        <h4 class="text-justify text-primary">Domicilio:</h4>
+                        <h6 class="text-justify mb-1">{{object.Domicilio}}</h6><br>
+                    {% endif %}
+                    {% if object.Ciudad %}
+                        <h4 class="text-justify text-primary">Ciudad:</h4>
+                        <h6 class="text-justify mb-1">{{object.Ciudad}}</h6><br>
+                    {% endif %}
+                    {% if object.Telefono %}                        
+                        <i class="material-icons mb-1">phone_iphone</i>
+                        <h6 class="text-justify mb-1">{{object.Telefono}}</h6><br>
+                    {% endif %}
+                    {% if object.Email %}
+                        <i class="material-icons">markunread_mailbox</i>
+                        <h6 class="text-justify mb-1">{{object.Email}}</h6><br>
+                    {% endif %}
+                </div>
+            </div> 
+            <div class="container text-center mb-3">                
+                <a href="{% url 'class_update' paciente.id %}"><button type="button" class="btn btn-warning btn-round">Editar</button></a>
+            </div>          
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+    
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+
+<script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js'></script>

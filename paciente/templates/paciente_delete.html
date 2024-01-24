@@ -1,0 +1,108 @@
+{% extends 'bases/base_sin_sidebar.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    Eliminar paciente - {{object}} ?
+{% endblock %}
+
+{% block navigation_icon %}  {% endblock %}
+
+{% block sidebar %}
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a target="_blank" rel="noopener noreferrer" class="simple-text logo-normal">
+      Control <i class="fa fa-ravelry fa-lg text-info" aria-hidden="true"></i> Dr. Ortega
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+    {% if request.user.is_authenticated %}
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="material-icons">dashboard</i>
+          <p>Menú Principal</p>
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="material-icons">public</i>
+            <p>Website</p>
+          </a>
+      </li>
+      <li class="nav-item active {% if 'page-user' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_pacientes_lista' %}">
+          <i class="material-icons">medical_services</i>
+          <p>Pacientes</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_staff_lista' %}">
+          <i class="material-icons">groups</i>
+          <p>Staff</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'class_detail_staff' user.staff.id %}">
+          <i class="material-icons">person</i>
+          <p>Perfíl de Usuario</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="{% url 'admin:login' %}">
+          <i class="material-icons">admin_panel_settings</i>
+          <p>Modo Admin</p>
+        </a>
+      </li>       
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'logout' %}" >
+          <i class="material-icons">directions_run</i>
+          <p>Salir</p>
+        </a>
+      </li>
+
+     
+    {% else %}
+
+    <li class="nav-item active ">
+      <a class="nav-link" href="{% url 'login' %}" >
+        <i class="material-icons">face</i>
+        <p>Entrar</p>
+      </a>
+    </li>
+
+
+    {% endif %}
+    </ul>
+  </div>
+
+</div>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-danger text-center">
+                    <h3>¿Realmente desea eliminar el registro {{object}} ?</h3>    
+                </div>
+                <div class="card-body">
+                    <div class="container text-center">
+                        <form class="form" method="post">
+                            <input type="submit" name="Eliminar" value="Si, eliminar" class="btn btn-danger eliminar">
+                            <a  class="btn btn-warning cancelar ml-3" href="{% url 'class_pacientes_lista' %}">Cancelar</a>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}  {% endblock %}

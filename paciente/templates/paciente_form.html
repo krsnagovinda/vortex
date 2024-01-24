@@ -1,0 +1,141 @@
+{% extends 'bases/base_sin_sidebar.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% load materializecss %}
+
+{% block js %}
+<!-- Compiled and minified JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
+{% endblock %}
+
+{% block css %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> 
+  <link href="/static/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+{% endblock %}
+
+
+{% block titulo %}
+    Datos del Paciente {{paciente.id_Paciente}} 
+{% endblock %}
+
+{% block navigation_icon %} {% endblock %}
+
+{% block sidebar %}
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+    <div class="logo">
+      <a target="_blank" rel="noopener noreferrer" class="simple-text logo-normal">
+        Control <i class="fa fa-ravelry fa-lg text-info" aria-hidden="true"></i> Dr. Ortega
+      </a>  
+    </div>
+    <div class="sidebar-wrapper">
+      <ul class="nav">
+      {% if request.user.is_authenticated %}
+  
+        <li class="nav-item ">
+          <a class="nav-link" href="{% url 'dashboard' %}">
+            <i class="material-icons">dashboard</i>
+            <p>Menú Principal</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="material-icons">public</i>
+            <p>Website</p>
+          </a>
+      </li>
+        <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
+          <a class="nav-link" href="{% url 'class_pacientes_lista' %}">
+            <i class="material-icons">medical_services</i>
+            <p>Pacientes</p>
+          </a>
+        </li>
+        <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+          <a class="nav-link" href="{% url 'class_staff_lista' %}">
+            <i class="material-icons">groups</i>
+            <p>Staff</p>
+          </a>
+        </li>
+        <li class="nav-item active {% if 'ui-tables' in segment %} active {% endif %}">
+          <a class="nav-link" href="{% url 'class_update' paciente.id %}">
+            <i class="material-icons">groups</i>
+            <p>Editar Perfil de Paciente</p>
+          </a>
+        </li>
+        <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+          <a class="nav-link" href="{% url 'class_detail_staff' user.staff.id  %}">
+            <i class="material-icons">person</i>
+            <p>Perfíl de Usuario</p>
+          </a>
+        </li>
+        <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+          <a class="nav-link" href="{% url 'admin:login' %}">
+            <i class="material-icons">admin_panel_settings</i>
+            <p>Modo Admin</p>
+          </a>
+        </li>       
+  
+        <li class="nav-item ">
+          <a class="nav-link" href="{% url 'logout' %}" >
+            <i class="material-icons">directions_run</i>
+            <p>Salir</p>
+          </a>
+        </li>
+  
+       
+      {% else %}
+  
+      <li class="nav-item active ">
+        <a class="nav-link" href="{% url 'login' %}" >
+          <i class="material-icons">face</i>
+          <p>Entrar</p>
+        </a>
+      </li>
+  
+  
+      {% endif %}
+      </ul>
+    </div>
+  
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h3 class="card-title">Editar Perfil</h3>
+                    <h5 class="card-category">{{paciente.get_fullname}}</h5>    
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'class_update' paciente.id %}" enctype="multipart/form-data">                       
+                        {% csrf_token %}
+                        {{form|materializecss}}
+                        {{form.media}}     
+                        <br>
+                        <div class="container text-center mb-3"> 
+                            <button type="submit" class="btn btn-warning btn-round">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}  {% endblock %}
